@@ -1,0 +1,7 @@
+[user]
+	email = 74660186+ak1-foo@users.noreply.github.co
+	name = ak1-foo
+[pack]
+	windowMemory = 100m
+	packSizeLimit = 100m
+	threads = 1

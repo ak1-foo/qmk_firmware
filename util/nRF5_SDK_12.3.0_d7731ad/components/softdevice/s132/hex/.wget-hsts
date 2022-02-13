@@ -1,0 +1,7 @@
+# HSTS 1.0 Known Hosts database for GNU Wget.
+# Edit at your own risk.
+# <hostname>	<port>	<incl. subdomains>	<created>	<max-age>
+developer.arm.com	0	0	1637586241	15768000
+www.pjrc.com	0	0	1637586056	15552000
+github.com	0	1	1637586061	31536000
+github-releases.githubusercontent.com	0	0	1634022355	31536000

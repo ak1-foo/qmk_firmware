@@ -1,0 +1,4 @@
+languageserver-package	languageserver-package
+diagnostics	diagnostics
+languageserver	languageserver-package
+run	run
