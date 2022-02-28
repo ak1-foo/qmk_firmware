@@ -227,10 +227,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if(record->event.pressed){
         is_ime_en_ready = false;
         is_ime_jp_ready = false;
-      }else if(record->event.pressed == false && has_T_CTL_pressed == true){
+      }else if(record->event.pressed == true && has_T_CTL_pressed == true){
         unregister_code(KC_LCTL);
         has_T_CTL_pressed = false;
-      }else if(record->event.pressed == false && has_T_SFT_pressed == true){
+      }else if(record->event.pressed == true && has_T_SFT_pressed == true){
         unregister_code(KC_LSFT);
         has_T_SFT_pressed = false;
       }
