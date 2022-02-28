@@ -35,11 +35,11 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QED] = LAYOUT_preonic_grid( \
-      KC_ESC,         KC_1,          KC_2,           KC_3,    KC_4,    KC_5,      KC_6,  KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL, \
-      KC_TAB,         KC_Q,          KC_L,           KC_E,    KC_W,    KC_COMMA,  KC_B,  KC_M,    KC_Y,    KC_H,    KC_P,    XXXXXXX, \
-      KC_LCTL,        KC_A,          KC_O,           KC_U,    KC_I,    KC_DOT,    KC_G,  KC_T,    KC_N,    KC_R,    KC_S,    KC_RCTL, \
-      KC_LSFT,        KC_C,          KC_V,           KC_X,    KC_J,    KC_ESC,    KC_Z,  KC_K,    KC_F,    KC_D,    KC_MINUS,KC_RSFT, \
-      KC_LCTL,        LALT(KC_LEFT), KC_LALT,        T_SFT, KC_SPACE,  LOWER, RAISE,   KC_ENT, T_CTL, KC_BSPC,   LALT(KC_F10),QWERTY \
+      XXXXXXX,         XXXXXXX,          XXXXXXX,           XXXXXXX,    XXXXXXX,    XXXXXXX,      XXXXXXX,  XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX, \
+      XXXXXXX,         KC_Q,          KC_L,           KC_E,    KC_W,    KC_COMMA,  KC_B,  KC_M,    KC_Y,    KC_H,    KC_P,    XXXXXXX, \
+      XXXXXXX,        KC_A,          KC_O,           KC_U,    KC_I,    KC_DOT,    KC_G,  KC_T,    KC_N,    KC_R,    KC_S,    XXXXXXX, \
+      XXXXXXX,        KC_C,          KC_V,           KC_X,    KC_J,    KC_ESC,    KC_Z,  KC_K,    KC_F,    KC_D,    KC_MINUS, XXXXXXX, \
+      XXXXXXX,        LALT(KC_LEFT), KC_LALT,        T_SFT, KC_SPACE,  LOWER, RAISE,   KC_ENT, T_CTL, XXXXXXX,   LALT(KC_F10),QWERTY \
       ),
 
   [_QWERTY] = LAYOUT_preonic_grid( \
@@ -227,19 +227,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if(record->event.pressed){
         is_ime_en_ready = false;
         is_ime_jp_ready = false;
-      }else if(record->event.pressed == true && has_T_CTL_pressed == true){
-        unregister_code(KC_LCTL);
-        has_T_CTL_pressed = false;
-      }else if(record->event.pressed == true && has_T_SFT_pressed == true){
-        unregister_code(KC_LSFT);
-        has_T_SFT_pressed = false;
       }
+
       if(record->event.pressed){
         for(int i=0; i<length_of_symbol_en; i++){
           if(keycode == symbol_en[i]){
             tap_ime_en();
           }
         }
+      }
+
+      if(record->event.pressed == false && has_T_CTL_pressed == true){
+        unregister_code(KC_LCTL);
+        has_T_CTL_pressed = false;
+      }else if(record->event.pressed == false && has_T_SFT_pressed == true){
+        unregister_code(KC_LSFT);
+        has_T_SFT_pressed = false;
       }
   }
   return true;
