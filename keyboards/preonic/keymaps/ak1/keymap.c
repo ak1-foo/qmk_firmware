@@ -55,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______,        KC_NUBS, KC_MINUS,   KC_PERCENT, KC_CIRCUMFLEX, KC_GRAVE,     XXXXXXX,    LGUI(KC_LEFT), LGUI(KC_DOWN), LGUI(KC_UP),  LGUI(KC_RIGHT),  KC_DEL, \
       KC_LCTL,        KC_PLUS, KC_ASTR,     KC_SLASH,   KC_EQUAL,      KC_TILD,     XXXXXXX,     KC_LEFT,  KC_DOWN,   KC_UP,   KC_RIGHT,  KC_RCTL, \
       KC_LSFT,        KC_HASH, KC_DOLLAR, KC_QUESTION,  KC_AT,         KC_EXLM,     XXXXXXX,      KC_HOME,  KC_PGDOWN, KC_PGUP, KC_END,    KC_RSFT, \
-      XXXXXXX,     XXXXXXX,   XXXXXXX,     XXXXXXX,     XXXXXXX,      XXXXXXX,           ADJUST,   KC_BSPC,   XXXXXXX,   XXXXXXX,     XXXXXXX,  _______ \
+      XXXXXXX,     XXXXXXX,   XXXXXXX,     XXXXXXX,     XXXXXXX,      XXXXXXX,           ADJUST,   KC_BSPC,   KC_DEL,   XXXXXXX,     XXXXXXX,  _______ \
       ),
 
   [_RAISE] = LAYOUT_preonic_grid( \
