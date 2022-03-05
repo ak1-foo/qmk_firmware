@@ -201,12 +201,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
 
     default:
-      if(record->event.pressed){
-        is_ime_en_ready = false;
-        is_ime_jp_ready = false;
+      // KC_ESC clear all one shot mod and layer
+      if (keycode == KC_ESC && record->event.pressed) {
+        bool rc = true;
+        uint8_t mods = 0;
+        if ((mods = get_oneshot_mods()) && !has_oneshot_mods_timed_out()) {
+            clear_oneshot_mods();
+            unregister_mods(mods);
+            rc = false;
+        }
+        if ((mods = get_oneshot_locked_mods())) {
+            clear_oneshot_locked_mods();
+            unregister_mods(mods);
+            rc = false;
+        }
+        if (is_oneshot_layer_active()) {
+            layer_clear();
+            rc = false;
+        }
+        return rc;
       }
 
       if(record->event.pressed){
+        // ime
+        is_ime_en_ready = false;
+        is_ime_jp_ready = false;
+
+        // for symbol ime en
         for(int i=0; i<length_of_symbol_en; i++){
           if(keycode == symbol_en[i]){
             tap_ime_en();
