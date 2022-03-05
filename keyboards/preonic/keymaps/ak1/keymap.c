@@ -121,7 +121,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   static bool is_ime_en_ready = false, is_ime_jp_ready = false;
   static bool has_win_num_pressed = false;
-  static bool has_T_CTL_pressed = false, has_T_SFT_pressed = false;
 
   switch (keycode) {
     case QED:
