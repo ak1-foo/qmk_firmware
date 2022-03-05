@@ -28,9 +28,6 @@ enum custom_keycodes {
   WIN8,
   WIN9,
   WIN0,
-
-  T_CTL,
-  T_SFT,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -204,25 +201,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
       break;
 
-    case T_CTL:
-      if(record->event.pressed){
-        if(has_T_CTL_pressed == false){
-          register_code(KC_LCTL);
-          has_T_CTL_pressed = true;
-        }
-      }
-      return false;
-      break;
-    case T_SFT:
-      if(record->event.pressed){
-        if(has_T_SFT_pressed == false){
-          register_code(KC_LSFT);
-          has_T_SFT_pressed = true;
-        }
-      }
-      return false;
-      break;
-
     default:
       if(record->event.pressed){
         is_ime_en_ready = false;
@@ -235,18 +213,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             tap_ime_en();
           }
         }
-      }
-
-      if(record->event.pressed == true && has_T_CTL_pressed == true){
-        register_code(keycode);
-        unregister_code(KC_LCTL);
-        has_T_CTL_pressed = false;
-        return false;
-      }else if(record->event.pressed == true && has_T_SFT_pressed == true){
-        register_code(keycode);
-        unregister_code(KC_LSFT);
-        has_T_SFT_pressed = false;
-        return false;
       }
   }
   return true;
