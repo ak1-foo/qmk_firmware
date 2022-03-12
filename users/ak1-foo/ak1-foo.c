@@ -17,6 +17,38 @@
 #include "action.h"
 #include "quantum.h"
 
+const uint16_t symbol_en[] = {
+  KC_ESC,
+  KC_NUBS,
+  KC_PERCENT,
+  KC_CIRCUMFLEX,
+  KC_GRAVE,
+  KC_PLUS,
+  KC_ASTR,
+  KC_SLASH,
+  KC_EQUAL,
+  KC_TILD,
+  KC_HASH,
+  KC_DOLLAR,
+  KC_QUESTION,
+  KC_AT,
+  KC_EXLM,
+  KC_PIPE,
+  KC_LT,
+  KC_GT,
+  KC_LCBR,
+  KC_RCBR,
+  KC_UNDS,
+  KC_LPRN,
+  KC_RPRN,
+  KC_AMPR,
+  KC_COLN,
+  KC_SCOLON,
+  KC_QUOTE,
+  KC_DQT,
+};
+
+const int length_of_symbol_en = sizeof(symbol_en) / sizeof(symbol_en[0]);
 
 __attribute__((weak))
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record){
