@@ -201,6 +201,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
 
     default:
+      // KC_ESC clear all one shotrmod and layer
       if (keycode == KC_ESC && record->event.pressed) {
         bool rc = true;
         uint8_t mods = 0;
