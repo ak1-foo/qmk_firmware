@@ -18,6 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 #include "app_ble_func.h"
 #include <stdio.h>
+#include "keycode.h"
+#include "action.h"
+#include "quantum.h"
 
 enum custom_keycodes {
     AD_WO_L = SAFE_RANGE, /* Start advertising without whitelist  */
@@ -41,98 +44,179 @@ enum custom_keycodes {
     ENT_SLP,              /* Deep sleep mode                      */
     LOWER,                /* Layer  keycode                       */
     RAISE,                /* Layer  keycode                       */
+    ADJUST,               /* Layer  keycode                       */
+    WIN1,
+    WIN2,
+    WIN3,
+    WIN4,
+    WIN5,
+    WIN6,
+    WIN7,
+    WIN8,
+    WIN9,
+    WIN0,
 };
 
+void tap_ime_en(void);
+void tap_ime_jp(void);
 
 extern keymap_config_t keymap_config;
 
 enum {
-  _QWERTY,
+  _BASE,
   _LOWER,
   _RAISE,
   _ADJUST,
 };
-
-// Layer related keycodes
-#define ADJUST  MO(_ADJUST)
 
 // Fillers to make layering more clear
 #define _______ KC_TRNS
 #define XXXXXXX KC_NO
 
 const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_QWERTY] = LAYOUT(
- //+--------+--------+--------+--------+--------+--------+                        +--------+--------+--------+--------+--------+--------+
-   KC_Q, KC_L, KC_E, KC_W, KC_COMM,  KC_B, KC_M, KC_Y, KC_H, KC_P, \
- //|--------+--------+--------+--------+--------+--------+--------+      +--------+--------+--------+--------+--------+--------+--------|
-    KC_A, KC_O, KC_U, KC_I, KC_DOT,  KC_G, KC_T, KC_N, KC_R, KC_S, \
- //|--------+--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+--------+--------|
-    KC_C, KC_V, KC_X, KC_J, KC_ESC,  KC_Z, KC_K, KC_F, KC_D, KC_MINS, \
- //|--------+--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+--------+--------|
-                               KC_LSFT,  KC_SPACE, LOWER,                            RAISE,   KC_ENT, KC_LCTL \
- //                           +--------+--------+--------+--------+      +--------+--------+--------+--------+
-  )
-  /*
-  ,
+  [_BASE] = LAYOUT(
+      KC_Q, KC_L, KC_E, KC_W, KC_COMM, KC_B, KC_M, KC_Y, KC_H, KC_P, \
+      KC_A, KC_O, KC_U, KC_I, KC_DOT, KC_G, KC_T, KC_N, KC_R, KC_S, \
+      KC_C, KC_V, KC_X, KC_J, KC_ESC, KC_Z, KC_K, KC_F, KC_D, KC_MINS, \
+      KC_LSFT, KC_SPACE, LOWER, RAISE, KC_ENT, KC_LCTL \
+  ),
 
   [_LOWER] = LAYOUT(
- //+--------+--------+--------+--------+--------+--------+                        +--------+--------+--------+--------+--------+--------+
-    KC_ESC,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                          KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______, \
- //|--------+--------+--------+--------+--------+--------+--------+      +--------+--------+--------+--------+--------+--------+--------|
-    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                            KC_BSLS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, _______, \
- //|--------+--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+--------+--------|
-    _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,                           KC_PIPE, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, _______, \
- //|--------+--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+--------+--------|
-                               _______, _______, _______,                          _______, _______, _______ \
- //                           +--------+--------+--------+--------+      +--------+--------+--------+--------+
+      KC_NUBS, KC_MINUS, KC_PERCENT, KC_CIRCUMFLEX, KC_GRAVE, XXXXXXX, LGUI(KC_LEFT), LGUI(KC_DOWN), LGUI(KC_UP), LGUI(KC_RIGHT), \
+      KC_PLUS, KC_ASTR, KC_SLASH, KC_EQUAL, KC_TILD, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, \
+      KC_HASH, KC_DOLLAR, KC_QUESTION, KC_AT, KC_EXLM, XXXXXXX, KC_HOME, KC_PGDOWN, KC_PGUP, KC_END, \
+      XXXXXXX, XXXXXXX, XXXXXXX, ADJUST, KC_BSPC, KC_LGUI \
   ),
 
   [_RAISE] = LAYOUT(
- //+--------+--------+--------+--------+--------+--------+                        +--------+--------+--------+--------+--------+--------+
-    _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                             KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______, \
- //|--------+--------+--------+--------+--------+--------+--------+      +--------+--------+--------+--------+--------+--------+--------|
-    _______, _______, _______, _______, _______, _______,                          KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, _______, \
- //|--------+--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+--------+--------|
-    _______, _______, _______, _______, _______, _______,                          KC_HOME, KC_PGDN, KC_PGUP, KC_END,  XXXXXXX, _______, \
- //|--------+--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+--------+--------|
-                               _______, _______, _______,                          _______, _______, _______ \
- //                           +--------+--------+--------+--------+      +--------+--------+--------+--------+
+      KC_TAB, KC_7, KC_8, KC_9, KC_COMMA, KC_PIPE, KC_LT, KC_GT, KC_LCBR, KC_RCBR, \
+      LCTL(KC_TAB), KC_4, KC_5, KC_6, KC_DOT, KC_UNDS, KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC, \
+      LCTL(LSFT(KC_TAB)), KC_1, KC_2, KC_3, KC_0, KC_AMPR, KC_COLN, KC_SCOLON, KC_QUOTE, KC_DQT, \
+      KC_LALT, KC_SPACE, ADJUST, XXXXXXX, XXXXXXX, XXXXXXX \
   ),
 
   [_ADJUST] = LAYOUT ( \
- //+--------+--------+--------+--------+--------+--------+                        +--------+--------+--------+--------+--------+--------+
-    _______, AD_WO_L, ADV_ID1, ADV_ID2, ADV_ID3, ADV_ID4,                          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
- //|--------+--------+--------+--------+--------+--------+--------+      +--------+--------+--------+--------+--------+--------+--------|
-    _______, DELBNDS, DEL_ID1, DEL_ID2, DEL_ID3, DEL_ID4,                          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
- //|--------+--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+--------+--------|
-    _______, BATT_LV, ENT_SLP, ENT_DFU, RESET,   XXXXXXX,                          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
- //|--------+--------+--------+--------+--------+--------+--------|      |--------+--------+--------+--------+--------+--------+--------|
-                               _______, _______, _______,                          _______, _______, _______ \
- //                           +--------+--------+--------+--------+      +--------+--------+--------+--------+
+    KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, \
+    WIN1, WIN2, WIN3, WIN4, WIN5, AD_WO_L, ADV_ID1, ADV_ID2, ADV_ID3, ADV_ID4,\
+    BATT_LV, ENT_SLP, ENT_DFU, RESET, KC_F11, KC_F12, DEL_ID1, DEL_ID2, DEL_ID3, DEL_ID4,\
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DELBNDS \
   )
-  */
+};
+
+const uint16_t symbol_en[] = {
+  KC_ESC,
+  KC_NUBS,
+  KC_PERCENT,
+  KC_CIRCUMFLEX,
+  KC_GRAVE,
+  KC_PLUS,
+  KC_ASTR,
+  KC_SLASH,
+  KC_EQUAL,
+  KC_TILD,
+  KC_HASH,
+  KC_DOLLAR,
+  KC_QUESTION,
+  KC_AT,
+  KC_EXLM,
+  KC_PIPE,
+  KC_LT,
+  KC_GT,
+  KC_LCBR,
+  KC_RCBR,
+  KC_UNDS,
+  KC_LPRN,
+  KC_RPRN,
+  KC_AMPR,
+  KC_COLN,
+  KC_SCOLON,
+  KC_QUOTE,
+  KC_DQT,
+};
+
+const int length_of_symbol_en = sizeof(symbol_en) / sizeof(symbol_en[0]);
+
+void tap_code(uint16_t keycode){
+  register_code(keycode);
+  unregister_code(keycode);
+}
+
+void tap_ime_en(void){
+  tap_code(KC_F16);
+};
+
+void tap_ime_jp(void){
+  tap_code(KC_F17);
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
+  static bool is_ime_en_ready = false, is_ime_jp_ready = false;
+  static bool has_win_num_pressed = false;
   char str[16];
+
   switch (keycode) {
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        if(is_ime_en_ready == true){
+          tap_ime_en();
+        }else{
+          is_ime_en_ready = true;
+        }
       } else {
         layer_off(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
       }
+      is_ime_jp_ready = false;
       return false;
       break;
     case RAISE:
       if (record->event.pressed) {
         layer_on(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        if(is_ime_jp_ready == true){
+          tap_ime_jp();
+        }else{
+          is_ime_jp_ready = true;
+        }
       } else {
         layer_off(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      }
+      is_ime_en_ready = false;
+      return false;
+      break;
+    case ADJUST:
+        if (record->event.pressed) {
+          layer_on(_ADJUST);
+        } else {
+          layer_off(_ADJUST);
+          if(has_win_num_pressed == true){
+            unregister_code(KC_LWIN);
+            has_win_num_pressed = false;
+          }
+        }
+        return false;
+        break;
+
+    case WIN1:
+    case WIN2:
+    case WIN3:
+    case WIN4:
+    case WIN5:
+    case WIN6:
+    case WIN7:
+    case WIN8:
+    case WIN9:
+    case WIN0:
+      if (record->event.pressed){
+        if(has_win_num_pressed == false){
+          register_code(KC_LWIN);
+        }
+        tap_code(keycode - WIN1 + KC_1); // if keycode = WIN2, tap_code(KC_2);
+        has_win_num_pressed = true;
+
+        // against win + f16
+        is_ime_en_ready = false;
+        is_ime_jp_ready = false;
       }
       return false;
       break;
@@ -196,15 +280,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       bootloader_jump();
       return false;
     }
-  }
-  else if (!record->event.pressed) {
+  } else if (!record->event.pressed) {
     switch (keycode) {
     case ENT_SLP:
       sleep_mode_enter();
       return false;
     }
 
+  } else if (record->event.pressed) {
+      // ime
+      is_ime_en_ready = false;
+      is_ime_jp_ready = false;
+
+      // for symbol ime en
+      for (int i = 0; i < length_of_symbol_en; i++) {
+          if (keycode == symbol_en[i]) {
+              tap_ime_en();
+          }
+      }
   }
   return true;
 }
-;
