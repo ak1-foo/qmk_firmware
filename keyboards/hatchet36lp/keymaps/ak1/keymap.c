@@ -44,7 +44,7 @@ enum custom_keycodes {
     ENT_SLP,              /* Deep sleep mode                      */
     LOWER,                /* Layer  keycode                       */
     RAISE,                /* Layer  keycode                       */
-    ADJUST,               /* Layer  keycode                       */
+    //ADJUST,               /* Layer  keycode                       */
     WIN1,
     WIN2,
     WIN3,
@@ -85,21 +85,21 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_NUBS, KC_MINUS, KC_PERCENT, KC_CIRCUMFLEX, KC_GRAVE, XXXXXXX, LGUI(KC_LEFT), LGUI(KC_DOWN), LGUI(KC_UP), LGUI(KC_RIGHT), \
       KC_PLUS, KC_ASTR, KC_SLASH, KC_EQUAL, KC_TILD, XXXXXXX, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, \
       KC_HASH, KC_DOLLAR, KC_QUESTION, KC_AT, KC_EXLM, XXXXXXX, KC_HOME, KC_PGDOWN, KC_PGUP, KC_END, \
-      XXXXXXX, XXXXXXX, XXXXXXX, ADJUST, KC_BSPC, KC_LGUI \
+      XXXXXXX, XXXXXXX, _______, _______, KC_BSPC, KC_LGUI \
   ),
 
   [_RAISE] = LAYOUT(
       KC_TAB, KC_7, KC_8, KC_9, KC_COMMA, KC_PIPE, KC_LT, KC_GT, KC_LCBR, KC_RCBR, \
       LCTL(KC_TAB), KC_4, KC_5, KC_6, KC_DOT, KC_UNDS, KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC, \
       LCTL(LSFT(KC_TAB)), KC_1, KC_2, KC_3, KC_0, KC_AMPR, KC_COLN, KC_SCOLON, KC_QUOTE, KC_DQT, \
-      KC_LALT, KC_SPACE, ADJUST, XXXXXXX, XXXXXXX, XXXXXXX \
+      KC_LALT, KC_SPACE, _______, _______, XXXXXXX, XXXXXXX \
   ),
 
   [_ADJUST] = LAYOUT ( \
     KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, \
     WIN1, WIN2, WIN3, WIN4, WIN5, AD_WO_L, ADV_ID1, ADV_ID2, ADV_ID3, ADV_ID4,\
     BATT_LV, ENT_SLP, ENT_DFU, RESET, KC_F11, KC_F12, DEL_ID1, DEL_ID2, DEL_ID3, DEL_ID4,\
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, DELBNDS \
+    XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, DELBNDS \
   )
 };
 
@@ -159,6 +159,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
         if(is_ime_en_ready == true){
           tap_ime_en();
         }else{
@@ -166,6 +167,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       } else {
         layer_off(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        if(has_win_num_pressed == true){
+          unregister_code(KC_LWIN);
+          has_win_num_pressed = false;
+        }
       }
       is_ime_jp_ready = false;
       return false;
@@ -173,6 +179,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case RAISE:
       if (record->event.pressed) {
         layer_on(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
         if(is_ime_jp_ready == true){
           tap_ime_jp();
         }else{
@@ -180,41 +187,153 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       } else {
         layer_off(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        if(has_win_num_pressed == true){
+          unregister_code(KC_LWIN);
+          has_win_num_pressed = false;
+        }
       }
       is_ime_en_ready = false;
       return false;
       break;
-    case ADJUST:
-        if (record->event.pressed) {
-          layer_on(_ADJUST);
-        } else {
-          layer_off(_ADJUST);
-          if(has_win_num_pressed == true){
-            unregister_code(KC_LWIN);
-            has_win_num_pressed = false;
-          }
-        }
-        return false;
-        break;
+    //case ADJUST:
+    //    if (record->event.pressed) {
+    //      layer_on(_ADJUST);
+    //    } else {
+    //      layer_off(_ADJUST);
+    //      if(has_win_num_pressed == true){
+    //        unregister_code(KC_LWIN);
+    //        has_win_num_pressed = false;
+    //      }
+    //    }
+    //    return false;
+    //    break;
 
     case WIN1:
+      if (record->event.pressed){
+        if(has_win_num_pressed == false){
+          register_code(KC_LWIN);
+        }
+        tap_code(KC_1);
+        has_win_num_pressed = true;
+
+        is_ime_en_ready = false;
+        is_ime_jp_ready = false;
+      }
+      return false;
+      break;
     case WIN2:
+      if (record->event.pressed){
+        if(has_win_num_pressed == false){
+          register_code(KC_LWIN);
+        }
+        tap_code(KC_2);
+        has_win_num_pressed = true;
+
+        is_ime_en_ready = false;
+        is_ime_jp_ready = false;
+      }
+      return false;
+      break;
     case WIN3:
+      if (record->event.pressed){
+        if(has_win_num_pressed == false){
+          register_code(KC_LWIN);
+        }
+        tap_code(KC_3);
+        has_win_num_pressed = true;
+
+        is_ime_en_ready = false;
+        is_ime_jp_ready = false;
+      }
+      return false;
+      break;
     case WIN4:
+      if (record->event.pressed){
+        if(has_win_num_pressed == false){
+          register_code(KC_LWIN);
+        }
+        tap_code(KC_4);
+        has_win_num_pressed = true;
+
+        is_ime_en_ready = false;
+        is_ime_jp_ready = false;
+      }
+      return false;
+      break;
     case WIN5:
+      if (record->event.pressed){
+        if(has_win_num_pressed == false){
+          register_code(KC_LWIN);
+        }
+        tap_code(KC_5);
+        has_win_num_pressed = true;
+
+        is_ime_en_ready = false;
+        is_ime_jp_ready = false;
+      }
+      return false;
+      break;
     case WIN6:
+      if (record->event.pressed){
+        if(has_win_num_pressed == false){
+          register_code(KC_LWIN);
+        }
+        tap_code(KC_6);
+        has_win_num_pressed = true;
+
+        is_ime_en_ready = false;
+        is_ime_jp_ready = false;
+      }
+      return false;
+      break;
     case WIN7:
+      if (record->event.pressed){
+        if(has_win_num_pressed == false){
+          register_code(KC_LWIN);
+        }
+        tap_code(KC_7);
+        has_win_num_pressed = true;
+
+        is_ime_en_ready = false;
+        is_ime_jp_ready = false;
+      }
+      return false;
+      break;
     case WIN8:
+      if (record->event.pressed){
+        if(has_win_num_pressed == false){
+          register_code(KC_LWIN);
+        }
+        tap_code(KC_8);
+        has_win_num_pressed = true;
+
+        is_ime_en_ready = false;
+        is_ime_jp_ready = false;
+      }
+      return false;
+      break;
     case WIN9:
+      if (record->event.pressed){
+        if(has_win_num_pressed == false){
+          register_code(KC_LWIN);
+        }
+        tap_code(KC_9);
+        has_win_num_pressed = true;
+
+        is_ime_en_ready = false;
+        is_ime_jp_ready = false;
+      }
+      return false;
+      break;
     case WIN0:
       if (record->event.pressed){
         if(has_win_num_pressed == false){
           register_code(KC_LWIN);
         }
-        tap_code(keycode - WIN1 + KC_1); // if keycode = WIN2, tap_code(KC_2);
+        tap_code(KC_0);
         has_win_num_pressed = true;
 
-        // against win + f16
         is_ime_en_ready = false;
         is_ime_jp_ready = false;
       }
