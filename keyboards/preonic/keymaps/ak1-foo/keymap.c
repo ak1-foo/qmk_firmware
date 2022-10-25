@@ -17,7 +17,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       XXXXXXX,   KC_PERC,   KC_MINS,   KC_BSLS,   KC_CIRC,   KC_GRV,    KC_DEL,    G(KC_LEFT),G(KC_DOWN),G(KC_UP),  G(KC_RGHT),XXXXXXX, \
       XXXXXXX,   KC_PLUS,   KC_ASTR,   KC_SLSH,   KC_EQL,    KC_TILD,   KC_BSPC,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RIGHT,  XXXXXXX, \
       XXXXXXX,   KC_HASH,   KC_DLR,    KC_QUES,   KC_AT,     KC_EXLM,   C(KC_BSPC),KC_HOME,   KC_PGDOWN, KC_PGUP,   KC_END,    XXXXXXX, \
-      XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   ADJUST,    KC_F17,    KC_LGUI,   XXXXXXX,   XXXXXXX,   XXXXXXX  \
+      XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   ADJUST,    KC_LNG1,   KC_LGUI,   XXXXXXX,   XXXXXXX,   XXXXXXX  \
       ),
 
   [_RAISE] = LAYOUT_preonic_grid( \
@@ -25,7 +25,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       XXXXXXX,   C(KC_TAB), KC_7,      KC_8,      KC_9,      KC_COMMA,  KC_PIPE,   KC_LT,     KC_GT,     KC_LCBR,   KC_RCBR,   XXXXXXX, \
       XXXXXXX,   KC_TAB,    KC_4,      KC_5,      KC_6,      KC_DOT,    KC_UNDS,   KC_LPRN,   KC_RPRN,   KC_LBRC,   KC_RBRC,   XXXXXXX, \
       XXXXXXX,   C(S(KC_TAB)), KC_1,   KC_2,      KC_3,      KC_0,      KC_AMPR,   KC_COLN,   KC_SCOLON, KC_QUOTE,  KC_DQT,    XXXXXXX, \
-      XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_LALT,   KC_F16,    ADJUST,    XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX  \
+      XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_LALT,   KC_LNG2,   ADJUST,    XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX  \
       ),
 
   [_ADJUST] =  LAYOUT_preonic_grid( \
