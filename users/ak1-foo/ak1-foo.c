@@ -19,7 +19,7 @@
 
 const uint16_t symbol_en[] = {
   KC_ESC,
-  KC_NUBS,
+  KC_BSLS,
   KC_PERCENT,
   KC_CIRCUMFLEX,
   KC_GRAVE,
@@ -123,44 +123,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
 
     default:
-      // KC_ESC clear all one shotrmod and layer
-      if (keycode == KC_ESC && record->event.pressed) {
-        bool rc = true;
-        uint8_t mods = 0;
-        if ((mods = get_oneshot_mods()) && !has_oneshot_mods_timed_out()) {
-            clear_oneshot_mods();
-            unregister_mods(mods);
-            rc = false;
-        }
-        if ((mods = get_oneshot_locked_mods())) {
-            clear_oneshot_locked_mods();
-            unregister_mods(mods);
-            rc = false;
-        }
-        if (is_oneshot_layer_active()) {
-            layer_clear();
-            rc = false;
-        }
-        return rc;
-      }
-
       if(record->event.pressed){
         // for symbol ime en
         for(int i=0; i<length_of_symbol_en; i++){
           if(keycode == symbol_en[i]){
-            tap_ime_en();
+            tap_code(KC_LNG2);
           }
         }
       }
   }
   return process_record_keymap(keycode, record);
-};
-
-void tap_ime_en(void){
-  tap_code(KC_F16);
-};
-void tap_ime_jp(void){
-  tap_code(KC_F17);
 };
 
 void persistent_default_layer_set(uint16_t default_layer) {
