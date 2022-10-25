@@ -58,7 +58,6 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record){
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
-  static bool is_ime_en_ready = false, is_ime_jp_ready = false;
   static bool has_win_num_pressed = false;
 
   switch (keycode) {
@@ -77,29 +76,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
-        if(is_ime_en_ready == true){
-          tap_ime_en();
-        }else{
-          is_ime_en_ready = true;
-        }
       } else {
         layer_off(_LOWER);
       }
-      is_ime_jp_ready = false;
       return false;
       break;
     case RAISE:
       if (record->event.pressed) {
         layer_on(_RAISE);
-        if(is_ime_jp_ready == true){
-          tap_ime_jp();
-        }else{
-          is_ime_jp_ready = true;
-        }
       } else {
         layer_off(_RAISE);
       }
-      is_ime_en_ready = false;
       return false;
       break;
     case ADJUST:
@@ -131,10 +118,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         tap_code(keycode - WIN1 + KC_1); // if keycode = WIN2, tap_code(KC_2);
         has_win_num_pressed = true;
-
-        // against win + f16
-        is_ime_en_ready = false;
-        is_ime_jp_ready = false;
       }
       return false;
       break;
@@ -162,10 +145,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
 
       if(record->event.pressed){
-        // ime
-        is_ime_en_ready = false;
-        is_ime_jp_ready = false;
-
         // for symbol ime en
         for(int i=0; i<length_of_symbol_en; i++){
           if(keycode == symbol_en[i]){
