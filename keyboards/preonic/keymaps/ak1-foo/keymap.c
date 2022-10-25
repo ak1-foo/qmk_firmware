@@ -31,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_ADJUST] =  LAYOUT_preonic_grid( \
       XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   \
       KC_F1,     KC_F2,     KC_F3,     KC_F4,     KC_F5,     XXXXXXX,   XXXXXXX,   KC_F6,     KC_F7,     KC_F8,     KC_F9,     KC_F10,    \
-      WIN1,      WIN2,      WIN3,      WIN4,      WIN5,      XXXXXXX,   XXXXXXX,   WIN6,      WIN7,      WIN8,      WIN9,      G(KC_S),   \
+      WIN1,      WIN2,      WIN3,      WIN4,      WIN5,      XXXXXXX,   XXXXXXX,   WIN6,      WIN7,      WIN8,      WIN9,      SGUI(KC_S),\
       KC_CAPS,   G(KC_V),   G(KC_X),   A(KC_F4),  KC_F11,    XXXXXXX,   XXXXXXX,   KC_F12,    XXXXXXX,   XXXXXXX,   KC_DEL,    KC_LGUI,   \
       XXXXXXX,   XXXXXXX,   RESET,     XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX    \
       )
