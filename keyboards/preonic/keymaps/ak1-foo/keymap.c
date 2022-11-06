@@ -2,6 +2,7 @@
 
 #include "keycode.h"
 #include "ak1-foo.h"
+#include "trackball_module.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QED] = LAYOUT_preonic_grid( \
@@ -9,7 +10,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_Q,      KC_L,      KC_E,      KC_W,      KC_COMM,   XXXXXXX,   XXXXXXX,   KC_B,      KC_M,      KC_Y,      KC_H,      KC_P,      \
       KC_A,      KC_O,      KC_U,      KC_I,      KC_DOT,    XXXXXXX,   XXXXXXX,   KC_G,      KC_T,      KC_N,      KC_R,      KC_S,      \
       KC_C,      KC_V,      KC_X,      KC_J,      KC_ESC,    XXXXXXX,   XXXXXXX,   KC_Z,      KC_K,      KC_F,      KC_D,      KC_MINS,   \
-      XXXXXXX,   XXXXXXX,   KC_LSFT,   KC_SPC,    LOWER,     XXXXXXX,   XXXXXXX,   RAISE,     KC_ENT,    KC_LCTL,   XXXXXXX,   XXXXXXX    \
+      XXXXXXX,   XXXXXXX,   KC_LSFT,   KC_SPC,    LOWER,     KC_BTN1,   KC_BTN2,   RAISE,     KC_ENT,    KC_LCTL,   XXXXXXX,   XXXXXXX    \
       ),
 
   [_LOWER] = LAYOUT_preonic_grid( \
@@ -36,3 +37,5 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       XXXXXXX,   XXXXXXX,   RESET,     XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX    \
       )
 };
+
+// FIXME: scroll with trackball is not working
