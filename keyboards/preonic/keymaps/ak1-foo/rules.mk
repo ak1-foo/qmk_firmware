@@ -32,3 +32,8 @@ ENCODER_ENABLE = no
 DIP_SWITCH_ENABLE = yes
 
 LAYOUTS = ortho_5x12
+
+POINTING_DEVICE_ENABLE = yes
+POINTING_DEVICE_DRIVER = adns5050
+
+SRC += trackball_module.c
