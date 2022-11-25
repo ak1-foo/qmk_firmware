@@ -1,5 +1,6 @@
 /*
 Copyright 2022 aki27
+edited by ak1-foo
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -207,11 +208,9 @@ void eeconfig_init_kb(void) {
 
 
 void matrix_init_kb(void) {
-    // is safe to just read CPI setting since matrix init
-    // comes before pointing device init.
     cocot_config.raw = eeconfig_read_kb();
-    if (cocot_config.cpi_idx > CPI_OPTION_SIZE) // || cocot_config.scrl_div > SCRL_DIV_SIZE || cocot_config.rotation_angle > ANGLE_SIZE)
-    {
+    // load default setting if EEPROM seems brand new
+    if (cocot_config.raw == 0) {
         eeconfig_init_kb();
     }
     matrix_init_user();
