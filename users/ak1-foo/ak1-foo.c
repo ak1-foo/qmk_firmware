@@ -16,6 +16,7 @@
 #include "ak1-foo.h"
 #include "action.h"
 #include "quantum.h"
+#include "trackball_module.h"
 
 const uint16_t symbol_en[] = {
   KC_ESC,
@@ -76,8 +77,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
+        cocot_set_scroll_mode(true);
       } else {
         layer_off(_LOWER);
+        cocot_set_scroll_mode(false);
       }
       return false;
       break;
